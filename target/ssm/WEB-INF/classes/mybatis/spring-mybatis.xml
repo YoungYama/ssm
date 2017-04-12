@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+	    http://www.springframework.org/schema/context/spring-context.xsd
+	    http://www.springframework.org/schema/tx
+	    http://www.springframework.org/schema/tx/spring-tx.xsd">
+	    
+	<!-- 一、引入jdbc.properties配置文件 -->
+	<context:property-placeholder
+		location="classpath:jdbc.properties" />
+
+	<!-- 二、创建数据库连接池 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<!-- 初始化连接大小 -->
+		<property name="initialSize" value="${jdbc.initialSize}" />
+		<!-- 连接池最大数量 -->
+		<property name="maxActive" value="${jdbc.maxActive}" />
+		<!-- 连接池最大空闲 -->
+		<property name="maxIdle" value="${jdbc.maxIdle}" />
+		<!-- 连接池最小空闲 -->
+		<property name="minIdle" value="${jdbc.minIdle}" />
+		<!-- 获取连接最大等待时间 -->
+		<property name="maxWait" value="${jdbc.maxWait}" />
+		<!-- 关闭连接后不自动commit -->
+		<property name="defaultAutoCommit" value="${jdbc.defaultAutoCommit}" />
+	</bean>
+
+	<!-- 三、创建SqlSessionFactory，并指定数据源连接池dataSource、mybatis-config.xml全局配置文件 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 注入数据源连接池dataSource -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 注入mybatis-config.xml全局配置文件 -->
+		<property name="configLocation"
+			value="classpath:mybatis/mybatis-config.xml" />
+		<!-- 扫描bean包，在*Mapper.xml映射文件中对实体类使用别名，如com.yzz.entity.Manager对应Manager -->
+		<property name="typeAliasesPackage" value="com.yzz.entity" />
+		<!-- 扫描com.yzz.sql包，*Mapper.xml映射文件用于匹配对应的dao接口 -->
+		<property name="mapperLocations" value="classpath:com/yzz/sql/*Mapper.xml" />
+	</bean>
+
+	<!-- 四、dao接口所在包名，Spring会自动查找其下的类匹配对应的*Mapper.xml -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 注入SqlSessionFactory -->
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+		<!-- 给出需要扫描mapper接口包 -->
+		<property name="basePackage" value="com.yzz.mapper" />
+	</bean>
+
+	<!--五、事务，就是保证一系列业务逻辑全部执行或者全部不执行,spring aop要抛出RuntimeException异常才会回滚 -->
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 配置基于注解式的声明式事务@Transactional -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+</beans>

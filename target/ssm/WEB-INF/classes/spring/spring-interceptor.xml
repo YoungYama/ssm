@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans 
+    	http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+	<!-- springMVC 拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/pages/*" />
+			<mvc:mapping path="/pages/*/*" />
+			<mvc:exclude-mapping path="/index.html" />
+			<mvc:exclude-mapping path="/pages/login.html" />
+			<mvc:exclude-mapping path="/pages/register.html" />
+			<mvc:exclude-mapping path="/pages/error/404.html" />
+			<mvc:exclude-mapping path="/pages/error/500.html" />
+			<bean class="com.sziit.interceptor.LoginInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+</beans>
