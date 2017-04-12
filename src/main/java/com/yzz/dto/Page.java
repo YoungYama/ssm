@@ -7,6 +7,8 @@ public class Page {
 	private String orderField;
 	private String sort = "DESC";
 
+	private Integer start;
+
 	private Integer totalRecord;
 	private Integer totalPage;
 
@@ -42,12 +44,22 @@ public class Page {
 		this.sort = sort == null ? null : sort.trim();
 	}
 
+	public Integer getStart() {
+		return start;
+	}
+
+	public void setStart(Integer start) {
+		this.start = start;
+	}
+
 	public Integer getTotalRecord() {
 		return totalRecord;
 	}
 
 	public void setTotalRecord(Integer totalRecord) {
 		if (!totalRecord.equals(null)) {
+			this.start = (this.currentPage - 1) * this.pageSize;
+
 			this.totalPage = (totalRecord % this.pageSize) == 0 ? (totalRecord / this.pageSize)
 					: (totalRecord / this.pageSize) + 1;
 		}

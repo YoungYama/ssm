@@ -1,11 +1,11 @@
-package com.yzz.entity; 
+package com.yzz.temp; 
 
 /** 
 * 
 * @description: sys_user表的实体类SysUser 
 * 
 * @author 杨志钊 
-* @date 2017-04-12 15:31:26 
+* @date 2017-04-12 17:26:18 
 */ 
 
 public class SysUser {
