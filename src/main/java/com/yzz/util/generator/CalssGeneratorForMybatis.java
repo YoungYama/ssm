@@ -23,9 +23,9 @@ public class CalssGeneratorForMybatis {
 
 		CalssGeneratorForMybatis.setTableAndClassDatas(map);
 		
-//		CalssGeneratorForMybatis.generateEntityClass();
-//		
-//		CalssGeneratorForMybatis.generateDaoClass();
+		CalssGeneratorForMybatis.generateEntityClass();
+		
+		CalssGeneratorForMybatis.generateDaoClass();
 		
 		CalssGeneratorForMybatis.generateMapperXml();
 	}
@@ -140,6 +140,8 @@ public class CalssGeneratorForMybatis {
 					+ entityClassName.substring(1, entityClassName.length()) + "Id";
 			className += "Dao";
 			
+			String classIdPropertyType = classPropertyTypes.get(i).get(0);
+			
 			String daoTemplate = "package " + daoTargetPackage + ";\n"+
 					"\n"+
 					"import java.util.List;\n"+
@@ -153,21 +155,23 @@ public class CalssGeneratorForMybatis {
 					"@Repository\n"+
 					"public interface " + className + " {\n"+
 					"\n"+
-					"	int deleteByPrimaryKey(String " + entityIdName + ");\n"+
+					"	int deleteByPrimaryKey(" + classIdPropertyType + " " + entityIdName + ");\n"+
+					"\n"+
+					"	int deleteBatch(" + classIdPropertyType + "[] " + entityIdName + "s);\n"+
 					"\n"+
 					"	int insert(" + entityClassName + " entity);\n"+
 					"\n"+
 					"	int insertSelective(" + entityClassName + " entity);\n"+
 					"\n"+
-					"	" + entityClassName + " selectByPrimaryKey(String " + entityIdName + ");\n"+
+					"	" + entityClassName + " selectByPrimaryKey(" + classIdPropertyType + " " + entityIdName + ");\n"+
 					"\n"+
 					"	List<" + entityClassName + "> selectByEntityAndPage(@Param(\"entity\") " + entityClassName + " entity, @Param(\"page\") Page page);\n"+
 					"\n"+
 					"	int countByEntity(@Param(\"entity\") " + entityClassName + " entity);\n"+
 					"\n"+
-					"	int updateByPrimaryKeySelective(" + entityClassName + " entity);\n"+
-					"\n"+
 					"	int updateByPrimaryKey(" + entityClassName + " entity);\n"+
+					"\n"+
+					"	int updateByPrimaryKeySelective(" + entityClassName + " entity);\n"+
 					"\n"+
 					"}\n";
 			
@@ -199,6 +203,9 @@ public class CalssGeneratorForMybatis {
 			String insertAll = "";
 			String insertSelectiveBefore = "";
 			String insertSelectiveAfter = "";
+			
+			String updateAll = "";
+			String updateSelective = "";
 			for (int j = 0; j < classPropertyNames.get(i).size(); j++) {
 				String tableColumnName = tableColumnNames.get(i).get(j);
 				String classPropertyName = classPropertyNames.get(i).get(j);
@@ -212,7 +219,12 @@ public class CalssGeneratorForMybatis {
 				
 				insertAll += "#{" + classPropertyName + ",jdbcType=" + tableColumnJdbcType + "},\n";
 				insertSelectiveBefore += "<if test=\"" + classPropertyName + " != null\">" + tableColumnName + ",\n</if>\n";
-				insertSelectiveAfter += "<if test=\"" + classPropertyName + " != null\">\n " + tableColumnName + " = #{" + classPropertyName + ",jdbcType=" + tableColumnJdbcType + "}\n</if>\n";
+				insertSelectiveAfter += "<if test=\"" + classPropertyName + " != null\">\n #{" + classPropertyName + ",jdbcType=" + tableColumnJdbcType + "},\n</if>\n";
+				
+				if (j != 0) {
+					updateAll = tableColumnName + " = #{" + classPropertyName + ",jdbcType=" + tableColumnJdbcType + "},\n";
+					updateSelective = "<if test=\"" + classPropertyName + " != null\">\n " + tableColumnName + " = #{" + classPropertyName + ",jdbcType=" + tableColumnJdbcType + "},\n</if>\n";
+				}
 				
 				selectWheres += "<if test=\"entity." + classPropertyName + " != null\">\nand " + tableColumnName + " = #{entity." + classPropertyName + ",jdbcType=" + tableColumnJdbcType + "}\n</if>\n";
 				
@@ -220,23 +232,33 @@ public class CalssGeneratorForMybatis {
 			}
 			baseColumnList = baseColumnList.substring(0, baseColumnList.lastIndexOf(","));
 			insertAll = insertAll.substring(0, insertAll.lastIndexOf(","));
+			updateAll = updateAll.substring(0, updateAll.lastIndexOf(","));
 			
 			mapperXmlTemplate += "</resultMap>\n<sql id=\"Base_Column_List\">\n" + baseColumnList + "\n</sql>\n";
 			
-			mapperXmlTemplate += "<select id=\"selectByPrimaryKey\" resultMap=\"BaseResultMap\" parameterType=\"" + classIdTypeFullName + "\">\nselect\n<include refid=\"Base_Column_List\" />\nfrom " + tableName + " \nwhere " + tableIdName + " = #{" + entityIdName + ",jdbcType=" + tableIdType + "}\n</select>\n";
+			mapperXmlTemplate += "<select id=\"selectByPrimaryKey\" resultMap=\"BaseResultMap\" parameterType=\"" + classIdTypeFullName + "\">\nselect\n<include refid=\"Base_Column_List\" />\nfrom " + tableName + " \nwhere " + tableIdName + " = #{" + entityIdName + ",jdbcType=" + tableIdType + "}\n</select>\n\n";
 			
 			mapperXmlTemplate += "<select id=\"selectByEntityAndPage\" resultMap=\"BaseResultMap\" >\nselect\n<include refid=\"Base_Column_List\" />\nfrom " + tableName + " \n<where>\n " + selectWheres + "</where>\n";
-			mapperXmlTemplate += "<if test=\"page.orderField != null\">\norder by #{page.orderField,jdbcType=VARCHAR} #{page.sort,jdbcType=VARCHAR}\n</if>\n<if test=\"page.start != null\">\nlimit #{page.start,jdbcType=INTEGER}, #{page.pageSize,jdbcType=INTEGER}\n</if>\n</select>\n";
+			mapperXmlTemplate += "<if test=\"page.orderField != null\">\norder by #{page.orderField,jdbcType=VARCHAR} #{page.sort,jdbcType=VARCHAR}\n</if>\n<if test=\"page.start != null\">\nlimit #{page.start,jdbcType=INTEGER}, #{page.pageSize,jdbcType=INTEGER}\n</if>\n</select>\n\n";
 				
-			mapperXmlTemplate += "<select id=\"countByEntity\" resultType=\"java.lang.Integer\" >\nselect count(*) from " + tableName + " \n<where>\n " + selectWheres + "</where>\n</select>\n";
+			mapperXmlTemplate += "<select id=\"countByEntity\" resultType=\"java.lang.Integer\" >\nselect count(*) from " + tableName + " \n<where>\n " + selectWheres + "</where>\n</select>\n\n";
 			
-			mapperXmlTemplate += "<delete id=\"deleteByPrimaryKey\" parameterType=\"" + classIdTypeFullName + "\">\ndelete\nfrom " + tableName + " \nwhere " + tableIdName + " = #{" + entityIdName + ",jdbcType=" + tableIdType + "}\n</delete>\n";
+			mapperXmlTemplate += "<delete id=\"deleteByPrimaryKey\" parameterType=\"" + classIdTypeFullName + "\">\ndelete\nfrom " + tableName + " \n<foreach collection=\"list\" item=\"item\" open=\"(\" separator=\",\" close=\")\"> \n #{item} \n </foreach>\n</delete>\n\n";
 			
-			mapperXmlTemplate += "<insert id=\"insert\" parameterType=\""  + entityTargetPackage + "." + entityClassName + "\">\ninsert into " + tableName + " \n( " + baseColumnList + ")\nvalues (" + insertAll + ") \n</insert>\n";
+			mapperXmlTemplate += "<delete id=\"deleteBatch\" parameterType=\"java.util.List\">\ndelete\nfrom " + tableName + " \nwhere " + tableIdName + " = #{" + entityIdName + ",jdbcType=" + tableIdType + "}\n</delete>\n\n";
 			
-			mapperXmlTemplate += "<insert id=\"insertSelective\" parameterType=\""  + entityTargetPackage + "." + entityClassName + "\">\ninsert into " + tableName + "\n<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">\n" + insertSelectiveBefore + "\n</trim>" + "\n<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">\n" + insertSelectiveAfter + "\n</trim>\n";
+			mapperXmlTemplate += "<insert id=\"insert\" parameterType=\""  + entityTargetPackage + "." + entityClassName + "\">\ninsert into " + tableName + " \n( " + baseColumnList + ")\nvalues (" + insertAll + ") \n</insert>\n\n";
 			
-			System.out.println(mapperXmlTemplate);
+			mapperXmlTemplate += "<insert id=\"insertSelective\" parameterType=\""  + entityTargetPackage + "." + entityClassName + "\">\ninsert into " + tableName + "\n<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">\n" + insertSelectiveBefore + "\n</trim>" + "\n<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">\n" + insertSelectiveAfter + "\n</trim>\n</insert>\n\n";
+			
+			mapperXmlTemplate += "<update id=\"updateByPrimaryKey\" parameterType=\""  + entityTargetPackage + "." + entityClassName + "\">\nupdate " + tableName + " set \n" + updateAll + "\n" + " \nwhere " + tableIdName + " = #{" + entityIdName + ",jdbcType=" + tableIdType + "}\n</update>\n\n";
+			
+			mapperXmlTemplate += "<update id=\"updateByPrimaryKeySelective\" parameterType=\""  + entityTargetPackage + "." + entityClassName + "\">\nupdate " + tableName + " <set> \n" + updateSelective + "</set>\n" + " \nwhere " + tableIdName + " = #{" + entityIdName + ",jdbcType=" + tableIdType + "}\n</update>\n\n";
+			
+			mapperXmlTemplate += "</mapper>";
+			
+			CalssGeneratorConfig.outputClassFile(daoImplTargetDir, className + ".xml", mapperXmlTemplate);
+			System.out.println("映射文件" + className + ".xml自动生成完成...");
 		}
 	}
 

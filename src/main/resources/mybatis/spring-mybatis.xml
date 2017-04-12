@@ -53,8 +53,8 @@
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<!-- 注入SqlSessionFactory -->
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-		<!-- 给出需要扫描mapper接口包 -->
-		<property name="basePackage" value="com.yzz.mapper" />
+		<!-- 给出需要扫描DAO接口包 -->
+		<property name="basePackage" value="com.yzz.dao" />
 	</bean>
 
 	<!--五、事务，就是保证一系列业务逻辑全部执行或者全部不执行,spring aop要抛出RuntimeException异常才会回滚 -->

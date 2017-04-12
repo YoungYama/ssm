@@ -3,13 +3,16 @@
 	<!-- 数据库配置 -->
 	<jdbcConnection driverClass="com.mysql.jdbc.Driver"
 		url="jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&amp;characterEncoding=UTF-8"
-		user="root" password="123456" />
+		user="root" password="" />
 
 	<!-- 实体类生成包位置 -->
-	<javaEntityGenerator targetPackage="com.yzz.temp" targetDir="src\main\java\"
+	<javaEntityGenerator targetPackage="com.yzz.entity" targetDir="src\main\java\"
 		stringTrim="true" />
-	<!-- DAO接口及实现类生成包位置，实现类自动添加一级包impl -->
-	<javaDaoGenerator targetPackage="com.yzz.temp" targetDir="src\main\java\" />
+	<!-- DAO接口生成包位置-->
+	<javaDaoGenerator targetPackage="com.yzz.dao" targetDir="src\main\java\" />
+	
+	<!-- DAO接口的实现类或者映射文件生成包位置 -->
+	<javaDaoImplGenerator targetPackage="com.yzz.sql" targetDir="src\mybatis\sql\" />
 
 	<!-- 要生成类的相关表，无则默认生成全部 -->
 	<!-- <table tableName="sys_user" /> -->

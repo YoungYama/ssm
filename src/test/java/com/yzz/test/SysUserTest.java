@@ -11,10 +11,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSON;
+import com.yzz.dao.SysUserDao;
 import com.yzz.dto.Page;
 import com.yzz.dto.ResultData;
 import com.yzz.entity.SysUser;
-import com.yzz.mapper.SysUserMapper;
 import com.yzz.util.EncryptionUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -24,7 +24,7 @@ public class SysUserTest {
 	private static Logger logger = Logger.getLogger(SysUserTest.class);
 
 	@Resource
-	SysUserMapper sysUserMapper;
+	SysUserDao sysUserDao;
 
 	@Test
 	public void test() throws Exception {
@@ -35,8 +35,8 @@ public class SysUserTest {
 //		String hql = "from SysUser";
 		Page page = new Page();
 		page.setOrderField("sys_user_id");
-		page.setTotalRecord(2);
-		List<SysUser> sysUsers = sysUserMapper.selectByEntityAndPage(entity, page);
+		page.setTotalRecord(sysUserDao.countByEntity(entity));
+		List<SysUser> sysUsers = sysUserDao.selectByEntityAndPage(entity, page);
 		ResultData<Object> resultData = new ResultData<Object>();
 		resultData.setData(sysUsers, page);
 		logger.info("-----------------------" + JSON.toJSONString(resultData));
@@ -50,7 +50,7 @@ public class SysUserTest {
 //		sysUserDao.deleteByPrimaryKey("fe4c0063-4854-4e1c-bb86-85fd3aa875b0-1491206877532");
 //		logger.info("--------------完成");
 //		logger.info("-----------------------" + JSON
-//				.toJSONString(sysUserMapper.selectByPrimaryKey("6784a1e7-425a-47e9-8b70-4363416bb00f-1483702770271")));
+//				.toJSONString(sysUserDao.selectByPrimaryKey("6784a1e7-425a-47e9-8b70-4363416bb00f-1483702770271")));
 //		logger.info(sysUserDao.selectByEntityAndPage(entity,null).size() + "-----------------------"
 //				+ JSON.toJSONString(sysUserDao.selectByEntityAndPage(entity,null)));
 	}

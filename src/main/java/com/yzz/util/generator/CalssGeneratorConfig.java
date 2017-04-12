@@ -86,6 +86,10 @@ public class CalssGeneratorConfig {
 						String columnName = rs.getString("COLUMN_NAME");
 						String remark = rs.getString("REMARKS");
 						String columnJdbcType = rs.getString("TYPE_NAME");
+						if (columnJdbcType.equals("INT")) {
+							columnJdbcType = "INTEGER";
+						}
+						
 						if (remark.equals(null) | remark.equals("")) {
 							remark = columnName;
 						}
@@ -173,9 +177,13 @@ public class CalssGeneratorConfig {
 		String daoTargetShortDir = javaDaoGeneratorAttrs.getNamedItem("targetDir").getNodeValue();
 
 		String daoTargetDir = "\\" + daoTargetShortDir + daoTargetPackage.replace(".", "\\");
+		
+		Node javaDaoImplGenerator = doc.getElementsByTagName("javaDaoImplGenerator").item(0);
+		NamedNodeMap javaDaoImplGeneratorAttrs = javaDaoImplGenerator.getAttributes();
+		String daoImplTargetPackage = javaDaoImplGeneratorAttrs.getNamedItem("targetPackage").getNodeValue();
+		String daoImplTargetShortDir = javaDaoImplGeneratorAttrs.getNamedItem("targetDir").getNodeValue();
 
-		String daoImplTargetPackage = daoTargetPackage + ".impl";
-		String daoImplTargetDir = "\\" + daoTargetShortDir + daoTargetDir + "\\impl";
+		String daoImplTargetDir = "\\" + daoImplTargetShortDir + daoImplTargetPackage.replace(".", "\\");
 
 		NodeList tables = doc.getElementsByTagName("table");
 		List<String> tableNames = new ArrayList<String>();

@@ -1,4 +1,4 @@
-package com.yzz.temp;
+package com.yzz.dao;
 
 import java.util.List;
 
@@ -13,12 +13,14 @@ import com.yzz.entity.SysUser;
 * @description: 实体类SysUser的DAO接口 
 * 
 * @author 杨志钊 
-* @date 2017-04-12 17:26:18 
+* @date 2017-04-12 21:33:25 
 */ 
 @Repository
 public interface SysUserDao {
 
 	int deleteByPrimaryKey(String SysUserId);
+
+	int deleteBatch(String[] SysUserIds);
 
 	int insert(SysUser entity);
 
@@ -28,8 +30,10 @@ public interface SysUserDao {
 
 	List<SysUser> selectByEntityAndPage(@Param("entity") SysUser entity, @Param("page") Page page);
 
-	int updateByPrimaryKeySelective(SysUser entity);
+	int countByEntity(@Param("entity") SysUser entity);
 
 	int updateByPrimaryKey(SysUser entity);
+
+	int updateByPrimaryKeySelective(SysUser entity);
 
 }

@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yzz.dao.SysUserDao;
 import com.yzz.dto.ResultData;
 import com.yzz.entity.SysUser;
 import com.yzz.log.LogInfo;
-import com.yzz.mapper.SysUserMapper;
 import com.yzz.util.ConstantUtil;
 import com.yzz.util.EncryptionUtil;
 import com.yzz.util.IdGenerator;
@@ -21,7 +21,7 @@ import com.yzz.util.IdGenerator;
 public class SysUserCtrl {
 
 	@Resource
-	SysUserMapper sysUserMapper;
+	SysUserDao sysUserDao;
 
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	@ResponseBody
@@ -36,7 +36,7 @@ public class SysUserCtrl {
 
 		ResultData<SysUser> resultData = new ResultData<>();
 
-		entity = sysUserMapper.selectByPrimaryKey("6784a1e7-425a-47e9-8b70-4363416bb00f-1483702770271");
+		entity = sysUserDao.selectByPrimaryKey("6784a1e7-425a-47e9-8b70-4363416bb00f-1483702770271");
 		session.setAttribute(ConstantUtil.LOGINING_SYSUSER, entity);
 		resultData.setData(entity);
 		
