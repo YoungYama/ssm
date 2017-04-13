@@ -69,6 +69,8 @@ public class JdbcTypeNameTranslator {
 		typeToName.put("TIME", Date.class.getName());
 
 		typeToName.put("TIMESTAMP", Date.class.getName());
+		
+		typeToName.put("DATETIME", Date.class.getName());
 
 		typeToName.put("TINYINT", Byte.class.getName());
 
@@ -86,8 +88,10 @@ public class JdbcTypeNameTranslator {
 	public static String getSimpleName(String sqlType) {
 		String fullName = typeToName.get(sqlType);
 		
-		if (fullName.indexOf(".") > 0) {
+		if (fullName != null && fullName.indexOf(".") > 0) {
 			fullName = fullName.substring(fullName.lastIndexOf(".") + 1);
+		}else{
+			fullName = sqlType;
 		}
 
 		return fullName;

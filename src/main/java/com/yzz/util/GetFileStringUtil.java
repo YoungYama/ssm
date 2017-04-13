@@ -1,13 +1,13 @@
-package com.yzz.util.generator;
+package com.yzz.util;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
-public class Test {
+public class GetFileStringUtil {
 
 	public static void main(String[] args) throws Exception {
-		String dir = "E:\\eclipseworkspace\\ssm\\src\\main\\java\\com\\yzz\\temp\\DAOTEMPLATE.java";
+		String dir = "E:\\eclipseworkspace\\ssm\\src\\main\\java\\com\\yzz\\ctrl\\SysUserCtrl.java";
 		FileReader fis = new FileReader(new File(dir));
 
 		BufferedReader br = new BufferedReader(fis);

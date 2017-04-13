@@ -6,7 +6,7 @@ import java.util.Map;
 import com.yzz.util.TimeUtil;
 
 /**
- * 
+ * 使用该插件时必须注意：表ID必须是表名加_id；如sys_user表的ID一定要是sys_user_id
  * @description:自动生成复用性高的通用crud操作实体类、DAO接口、DAO实现类，适用于hibernate框架与MySQL数据库
  *
  * @author 杨志钊
@@ -96,7 +96,7 @@ public class CalssGeneratorForHibernate {
 				} else {
 					tempStr = "	public void set" + classPropertyNameUpper + "(" + classPropertyType + " "
 							+ classPropertyName + ") { \n " + "		this." + classPropertyName + " = "
-							+ classPropertyName + "; \n	} \n";
+							+ classPropertyName + "; \n	} \n\n";
 					methodStr += tempStr;
 				}
 			}
@@ -110,11 +110,11 @@ public class CalssGeneratorForHibernate {
 
 	}
 
-	public static void generateDaoClass(Map<String, Object> map) throws Exception {
+	public static void generateDaoClass() throws Exception {
 
 	}
 
-	public static void generateDaoImplClass(Map<String, Object> map) throws Exception {
+	public static void generateDaoImplClass() throws Exception {
 
 	}
 

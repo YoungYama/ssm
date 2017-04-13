@@ -5,7 +5,7 @@ package com.yzz.entity;
 * @description: sys_user表的实体类SysUser 
 * 
 * @author 杨志钊 
-* @date 2017-04-12 21:33:25 
+* @date 2017-04-13 19:03:53 
 */ 
 
 public class SysUser {
@@ -99,5 +99,6 @@ public class SysUser {
 	public void setSysUserRole(Integer sysUserRole) { 
  		this.sysUserRole = sysUserRole; 
 	} 
+
  
  } 

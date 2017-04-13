@@ -33,8 +33,11 @@ public class CalssGeneratorConfig {
 	}
 
 	public static void outputClassFile(String distDir, String className, String classStr) throws Exception {
-		File file = new File(distDir + "\\" + className);
-
+		File file = new File(distDir);
+		if (!file.exists()) {
+			file.mkdir();
+		}
+		file = new File(distDir + "\\" + className);
 		if (!file.exists()) {
 			file.createNewFile();
 		}
@@ -143,7 +146,7 @@ public class CalssGeneratorConfig {
 		String xml = "";
 		FileInputStream fis = new FileInputStream(new File(classGeneratorConfigXML));
 
-		byte[] b = new byte[1024];
+		byte[] b = new byte[1024 * 1024];
 
 		int len;
 		while ((len = fis.read(b)) != -1) {
@@ -170,7 +173,13 @@ public class CalssGeneratorConfig {
 		String entityTargetDir = "\\" + entityTargetShortDir + entityTargetPackage.replace(".", "\\");
 
 		boolean stringTrim = Boolean.valueOf(javaEntityGeneratorAttrs.getNamedItem("stringTrim").getNodeValue());
-
+		
+		Node javaDtoGenerator = doc.getElementsByTagName("javaDtoGenerator").item(0);
+		String dtoTargetPackage = javaDtoGenerator.getAttributes().getNamedItem("targetPackage").getNodeValue();
+		
+		Node javaUtilGenerator = doc.getElementsByTagName("javaUtilGenerator").item(0);
+		String utilTargetPackage = javaUtilGenerator.getAttributes().getNamedItem("targetPackage").getNodeValue();
+		
 		Node javaDaoGenerator = doc.getElementsByTagName("javaDaoGenerator").item(0);
 		NamedNodeMap javaDaoGeneratorAttrs = javaDaoGenerator.getAttributes();
 		String daoTargetPackage = javaDaoGeneratorAttrs.getNamedItem("targetPackage").getNodeValue();
@@ -184,7 +193,24 @@ public class CalssGeneratorConfig {
 		String daoImplTargetShortDir = javaDaoImplGeneratorAttrs.getNamedItem("targetDir").getNodeValue();
 
 		String daoImplTargetDir = "\\" + daoImplTargetShortDir + daoImplTargetPackage.replace(".", "\\");
+		
+		Node javaServiceGenerator = doc.getElementsByTagName("javaServiceGenerator").item(0);
+		NamedNodeMap javaServiceGeneratorAttrs = javaServiceGenerator.getAttributes();
+		String serviceTargetPackage = javaServiceGeneratorAttrs.getNamedItem("targetPackage").getNodeValue();
+		String serviceTargetShortDir = javaServiceGeneratorAttrs.getNamedItem("targetDir").getNodeValue();
 
+		String serviceTargetDir = "\\" + serviceTargetShortDir + serviceTargetPackage.replace(".", "\\");
+		
+		String serviceImplTargetPackage = serviceTargetPackage + ".impl";
+		String serviceImplTargetDir = serviceTargetDir + "\\impl";
+		
+		Node javaCtrlGenerator = doc.getElementsByTagName("javaCtrlGenerator").item(0);
+		NamedNodeMap javaCtrlGeneratorAttrs = javaCtrlGenerator.getAttributes();
+		String ctrlTargetPackage = javaCtrlGeneratorAttrs.getNamedItem("targetPackage").getNodeValue();
+		String ctrlTargetShortDir = javaCtrlGeneratorAttrs.getNamedItem("targetDir").getNodeValue();
+
+		String ctrlTargetDir = "\\" + ctrlTargetShortDir + ctrlTargetPackage.replace(".", "\\");
+		
 		NodeList tables = doc.getElementsByTagName("table");
 		List<String> tableNames = new ArrayList<String>();
 		for (int i = 0; i < tables.getLength(); i++) {
@@ -199,10 +225,18 @@ public class CalssGeneratorConfig {
 		result.put("entityTargetDir", entityTargetDir);
 		result.put("entityTargetPackage", entityTargetPackage);
 		result.put("stringTrim", stringTrim);
+		result.put("dtoTargetPackage", dtoTargetPackage);
+		result.put("utilTargetPackage", utilTargetPackage);
 		result.put("daoTargetDir", daoTargetDir);
 		result.put("daoTargetPackage", daoTargetPackage);
 		result.put("daoImplTargetDir", daoImplTargetDir);
 		result.put("daoImplTargetPackage", daoImplTargetPackage);
+		result.put("serviceTargetDir", serviceTargetDir);
+		result.put("serviceTargetPackage", serviceTargetPackage);
+		result.put("serviceImplTargetDir", serviceImplTargetDir);
+		result.put("serviceImplTargetPackage", serviceImplTargetPackage);
+		result.put("ctrlTargetDir", ctrlTargetDir);
+		result.put("ctrlTargetPackage", ctrlTargetPackage);
 
 		if (tables.getLength() <= 0) {
 			Connection conn = getConnection(result);

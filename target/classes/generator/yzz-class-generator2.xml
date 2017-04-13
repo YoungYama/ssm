@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<generatorConfiguration>
+	<!-- 数据库配置 -->
+	<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://127.0.0.1:3306/webmailbase?useUnicode=true&amp;characterEncoding=UTF-8"
+		user="root" password="123456" />
+
+	<!-- 实体类生成包位置 -->
+	<javaEntityGenerator targetPackage="com.yzz.temp" targetDir="src\main\java\"
+		stringTrim="true" />
+	<!-- DAO接口生成包位置-->
+	<javaDaoGenerator targetPackage="com.yzz.temp" targetDir="src\main\java\" />
+	
+	<!-- DAO接口的实现类或者映射文件生成包位置 -->
+	<javaDaoImplGenerator targetPackage="com.yzz.temp" targetDir="src\main\java\" />
+
+	<!-- 要生成类的相关表，无则默认生成全部 -->
+	<!-- <table tableName="crm_customer_followup3" /> -->
+
+</generatorConfiguration>

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yzz.dao.CrmCustomerFollowup3Dao">
+<resultMap id="BaseResultMap" type="com.yzz.entity.CrmCustomerFollowup3">
+<id column="id" property="id" jdbcType="INTEGER" />
+<result column="customer_id" property="customerId" jdbcType="INTEGER" />
+<result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+<result column="followup_time" property="followupTime" jdbcType="VARCHAR" />
+<result column="followup_classify" property="followupClassify" jdbcType="INTEGER" />
+<result column="followup_way" property="followupWay" jdbcType="INTEGER" />
+<result column="remind_time_classify" property="remindTimeClassify" jdbcType="INTEGER" />
+<result column="purpose_process" property="purposeProcess" jdbcType="INTEGER" />
+<result column="followup_content" property="followupContent" jdbcType="VARCHAR" />
+<result column="focus_product" property="focusProduct" jdbcType="VARCHAR" />
+<result column="is_msg_remind" property="isMsgRemind" jdbcType="INTEGER" />
+<result column="is_email_remind" property="isEmailRemind" jdbcType="INTEGER" />
+<result column="remind_time" property="remindTime" jdbcType="VARCHAR" />
+<result column="mail_id" property="mailId" jdbcType="INTEGER" />
+<result column="create_date" property="createDate" jdbcType="VARCHAR" />
+</resultMap>
+<sql id="Base_Column_List">
+id,customer_id,create_user_id,followup_time,followup_classify,followup_way,remind_time_classify,purpose_process,followup_content,focus_product,is_msg_remind,is_email_remind,remind_time,mail_id,create_date
+</sql>
+<insert id="insert" parameterType="com.yzz.entity.CrmCustomerFollowup3">
+insert into crm_customer_followup3 
+( id,customer_id,create_user_id,followup_time,followup_classify,followup_way,remind_time_classify,purpose_process,followup_content,focus_product,is_msg_remind,is_email_remind,remind_time,mail_id,create_date)
+values (#{id,jdbcType=INTEGER},
+#{customerId,jdbcType=INTEGER},
+#{createUserId,jdbcType=INTEGER},
+#{followupTime,jdbcType=VARCHAR},
+#{followupClassify,jdbcType=INTEGER},
+#{followupWay,jdbcType=INTEGER},
+#{remindTimeClassify,jdbcType=INTEGER},
+#{purposeProcess,jdbcType=INTEGER},
+#{followupContent,jdbcType=VARCHAR},
+#{focusProduct,jdbcType=VARCHAR},
+#{isMsgRemind,jdbcType=INTEGER},
+#{isEmailRemind,jdbcType=INTEGER},
+#{remindTime,jdbcType=VARCHAR},
+#{mailId,jdbcType=INTEGER},
+#{createDate,jdbcType=VARCHAR}) 
+</insert>
+
+<delete id="deleteBatch" parameterType="java.util.List">
+delete
+from crm_customer_followup3 
+where id in 
+<foreach collection="list" item="item" open="(" separator="," close=")"> 
+ #{item} 
+ </foreach>
+</delete>
+
+<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+delete
+from crm_customer_followup3 
+where id = #{crmCustomerFollowup3Id,jdbcType=INTEGER}
+</delete>
+
+<update id="updateByPrimaryKey" parameterType="com.yzz.entity.CrmCustomerFollowup3">
+update crm_customer_followup3 set 
+customer_id = #{customerId,jdbcType=INTEGER},
+create_user_id = #{createUserId,jdbcType=INTEGER},
+followup_time = #{followupTime,jdbcType=VARCHAR},
+followup_classify = #{followupClassify,jdbcType=INTEGER},
+followup_way = #{followupWay,jdbcType=INTEGER},
+remind_time_classify = #{remindTimeClassify,jdbcType=INTEGER},
+purpose_process = #{purposeProcess,jdbcType=INTEGER},
+followup_content = #{followupContent,jdbcType=VARCHAR},
+focus_product = #{focusProduct,jdbcType=VARCHAR},
+is_msg_remind = #{isMsgRemind,jdbcType=INTEGER},
+is_email_remind = #{isEmailRemind,jdbcType=INTEGER},
+remind_time = #{remindTime,jdbcType=VARCHAR},
+mail_id = #{mailId,jdbcType=INTEGER},
+create_date = #{createDate,jdbcType=VARCHAR}
+ 
+where id = #{crmCustomerFollowup3Id,jdbcType=INTEGER}
+</update>
+
+<update id="updateByPrimaryKeySelective" parameterType="com.yzz.entity.CrmCustomerFollowup3">
+update crm_customer_followup3 <set> 
+<if test="customerId != null">
+ customer_id = #{customerId,jdbcType=INTEGER},
+</if>
+<if test="createUserId != null">
+ create_user_id = #{createUserId,jdbcType=INTEGER},
+</if>
+<if test="followupTime != null">
+ followup_time = #{followupTime,jdbcType=VARCHAR},
+</if>
+<if test="followupClassify != null">
+ followup_classify = #{followupClassify,jdbcType=INTEGER},
+</if>
+<if test="followupWay != null">
+ followup_way = #{followupWay,jdbcType=INTEGER},
+</if>
+<if test="remindTimeClassify != null">
+ remind_time_classify = #{remindTimeClassify,jdbcType=INTEGER},
+</if>
+<if test="purposeProcess != null">
+ purpose_process = #{purposeProcess,jdbcType=INTEGER},
+</if>
+<if test="followupContent != null">
+ followup_content = #{followupContent,jdbcType=VARCHAR},
+</if>
+<if test="focusProduct != null">
+ focus_product = #{focusProduct,jdbcType=VARCHAR},
+</if>
+<if test="isMsgRemind != null">
+ is_msg_remind = #{isMsgRemind,jdbcType=INTEGER},
+</if>
+<if test="isEmailRemind != null">
+ is_email_remind = #{isEmailRemind,jdbcType=INTEGER},
+</if>
+<if test="remindTime != null">
+ remind_time = #{remindTime,jdbcType=VARCHAR},
+</if>
+<if test="mailId != null">
+ mail_id = #{mailId,jdbcType=INTEGER},
+</if>
+<if test="createDate != null">
+ create_date = #{createDate,jdbcType=VARCHAR},
+</if>
+</set>
+ 
+where id = #{crmCustomerFollowup3Id,jdbcType=INTEGER}
+</update>
+
+<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+select
+<include refid="Base_Column_List" />
+from crm_customer_followup3 
+where id = #{crmCustomerFollowup3Id,jdbcType=INTEGER}
+</select>
+
+<select id="selectByEntityAndPage" resultMap="BaseResultMap" >
+select
+<include refid="Base_Column_List" />
+from crm_customer_followup3 
+<if test="entity != null">
+<where>
+ <if test="entity.id != null">
+and id = #{entity.id,jdbcType=INTEGER}
+</if>
+<if test="entity.customerId != null">
+and customer_id = #{entity.customerId,jdbcType=INTEGER}
+</if>
+<if test="entity.createUserId != null">
+and create_user_id = #{entity.createUserId,jdbcType=INTEGER}
+</if>
+<if test="entity.followupTime != null">
+and followup_time = #{entity.followupTime,jdbcType=VARCHAR}
+</if>
+<if test="entity.followupClassify != null">
+and followup_classify = #{entity.followupClassify,jdbcType=INTEGER}
+</if>
+<if test="entity.followupWay != null">
+and followup_way = #{entity.followupWay,jdbcType=INTEGER}
+</if>
+<if test="entity.remindTimeClassify != null">
+and remind_time_classify = #{entity.remindTimeClassify,jdbcType=INTEGER}
+</if>
+<if test="entity.purposeProcess != null">
+and purpose_process = #{entity.purposeProcess,jdbcType=INTEGER}
+</if>
+<if test="entity.followupContent != null">
+and followup_content = #{entity.followupContent,jdbcType=VARCHAR}
+</if>
+<if test="entity.focusProduct != null">
+and focus_product = #{entity.focusProduct,jdbcType=VARCHAR}
+</if>
+<if test="entity.isMsgRemind != null">
+and is_msg_remind = #{entity.isMsgRemind,jdbcType=INTEGER}
+</if>
+<if test="entity.isEmailRemind != null">
+and is_email_remind = #{entity.isEmailRemind,jdbcType=INTEGER}
+</if>
+<if test="entity.remindTime != null">
+and remind_time = #{entity.remindTime,jdbcType=VARCHAR}
+</if>
+<if test="entity.mailId != null">
+and mail_id = #{entity.mailId,jdbcType=INTEGER}
+</if>
+<if test="entity.createDate != null">
+and create_date = #{entity.createDate,jdbcType=VARCHAR}
+</if>
+</where>
+</if>
+<if test="page != null">
+<if test="page.orderField != null">
+order by #{page.orderField,jdbcType=VARCHAR} #{page.sort,jdbcType=VARCHAR}
+</if>
+<if test="page.start != null">
+limit #{page.start,jdbcType=INTEGER}, #{page.pageSize,jdbcType=INTEGER}
+</if>
+</if>
+</select>
+
+<select id="countByEntity" resultType="java.lang.Integer" >
+select count(*) from crm_customer_followup3 
+<if test="entity != null">
+<where>
+ <if test="entity.id != null">
+and id = #{entity.id,jdbcType=INTEGER}
+</if>
+<if test="entity.customerId != null">
+and customer_id = #{entity.customerId,jdbcType=INTEGER}
+</if>
+<if test="entity.createUserId != null">
+and create_user_id = #{entity.createUserId,jdbcType=INTEGER}
+</if>
+<if test="entity.followupTime != null">
+and followup_time = #{entity.followupTime,jdbcType=VARCHAR}
+</if>
+<if test="entity.followupClassify != null">
+and followup_classify = #{entity.followupClassify,jdbcType=INTEGER}
+</if>
+<if test="entity.followupWay != null">
+and followup_way = #{entity.followupWay,jdbcType=INTEGER}
+</if>
+<if test="entity.remindTimeClassify != null">
+and remind_time_classify = #{entity.remindTimeClassify,jdbcType=INTEGER}
+</if>
+<if test="entity.purposeProcess != null">
+and purpose_process = #{entity.purposeProcess,jdbcType=INTEGER}
+</if>
+<if test="entity.followupContent != null">
+and followup_content = #{entity.followupContent,jdbcType=VARCHAR}
+</if>
+<if test="entity.focusProduct != null">
+and focus_product = #{entity.focusProduct,jdbcType=VARCHAR}
+</if>
+<if test="entity.isMsgRemind != null">
+and is_msg_remind = #{entity.isMsgRemind,jdbcType=INTEGER}
+</if>
+<if test="entity.isEmailRemind != null">
+and is_email_remind = #{entity.isEmailRemind,jdbcType=INTEGER}
+</if>
+<if test="entity.remindTime != null">
+and remind_time = #{entity.remindTime,jdbcType=VARCHAR}
+</if>
+<if test="entity.mailId != null">
+and mail_id = #{entity.mailId,jdbcType=INTEGER}
+</if>
+<if test="entity.createDate != null">
+and create_date = #{entity.createDate,jdbcType=VARCHAR}
+</if>
+</where>
+</if>
+</select>
+
+</mapper>

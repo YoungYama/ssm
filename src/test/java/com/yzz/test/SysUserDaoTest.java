@@ -19,9 +19,9 @@ import com.yzz.util.EncryptionUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:springmvc-servlet.xml", "classpath:applicationContext.xml" })
-public class SysUserTest {
+public class SysUserDaoTest {
 
-	private static Logger logger = Logger.getLogger(SysUserTest.class);
+	private static Logger logger = Logger.getLogger(SysUserDaoTest.class);
 
 	@Resource
 	SysUserDao sysUserDao;
@@ -32,7 +32,6 @@ public class SysUserTest {
 		entity.setSysUserName("杨志钊");
 //		entity.setSysUserId(IdGenerator.generatesId());
 		entity.setPassword(EncryptionUtil.encodePassword("123456"));
-//		String hql = "from SysUser";
 		Page page = new Page();
 		page.setOrderField("sys_user_id");
 		page.setTotalRecord(sysUserDao.countByEntity(entity));
@@ -40,8 +39,14 @@ public class SysUserTest {
 		ResultData<Object> resultData = new ResultData<Object>();
 		resultData.setData(sysUsers, page);
 		logger.info("-----------------------" + JSON.toJSONString(resultData));
-//		sysUserDao.insert(entity);
-//		sysUserDao.deleteByPrimaryKey("bdd16568-c122-4df2-9c2c-d76a31ea5b54-1491209325812");
+//		logger.info(sysUserDao.insert(entity));
+		entity.setSysUserId("19801253-8a98-4c53-9b51-48c5b5b0ae0b-1492054844377");
+		entity.setSysUserName("a杨志钊");
+//		logger.info(sysUserDao.updateByPrimaryKeySelective(entity));
+//		logger.info(sysUserDao.updateByPrimaryKey(entity));
+//		logger.info(sysUserDao.deleteByPrimaryKey("5444828e-e90d-40f0-bcea-e4215b677527-1492061731577"));
+//		String[] sysUserIds = {"24dad810-cdbc-4e12-bdd7-b629cac7c2e1-1492054887615","2158f163-d385-4d9b-863b-3ec72bafc881-1492055746418"};
+//		logger.info(sysUserDao.deleteBatch(Arrays.asList(sysUserIds)));
 //		String[] ids = {"d18f347f-c1cf-4812-87b1-35e154071e0f-1491206068270","d6c18384-39ab-49fb-ac55-63a44f6f7ff0-1491207012479"};
 //		sysUserDao.deleteBatch(ids);
 //		entity.setSysUserName("o成o");
