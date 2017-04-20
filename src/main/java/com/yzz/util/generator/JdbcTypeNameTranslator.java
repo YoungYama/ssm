@@ -80,6 +80,8 @@ public class JdbcTypeNameTranslator {
 		
 		typeToName.put("TEXT", String.class.getName());
 		
+		typeToName.put("TINYTEXT", String.class.getName());
+		
 		typeToName.put("MEDIUMTEXT", String.class.getName());
 		
 		typeToName.put("NUMERIC", BigDecimal.class.getName());

@@ -183,21 +183,21 @@ public class CalssGeneratorForMybatis {
 					"\n" + info + " \n"+
 					"@Repository\n"+
 					"public interface " + className + " {\n"+
-					"\n	//单个实体全部字段添加\n"+
+					"\n	/**单个实体全部字段添加*/\n"+
 					"	int insert(" + entityClassName + " entity);\n"+
-					"\n	//根据实体ID单个实体删除\n"+
+					"\n	/**根据实体ID单个实体删除*/\n"+
 					"	int deleteByPrimaryKey(" + classIdPropertyType + " " + entityIdName + ");\n"+
-					"\n	//根据实体ID数组批量删除实体\n"+
+					"\n	/**根据实体ID数组批量删除实体*/\n"+
 					"	int deleteBatch(List<" + classIdPropertyType + "> " + entityIdName + "s);\n"+
-					"\n	//单个实体全部字段更新\n"+
+					"\n	/**单个实体全部字段更新*/\n"+
 					"	int updateByPrimaryKey(" + entityClassName + " entity);\n"+
-					"\n	//单个实体选择性字段更新\n"+
+					"\n	/**单个实体选择性字段更新*/\n"+
 					"	int updateByPrimaryKeySelective(" + entityClassName + " entity);\n"+
-					"\n	//根据实体ID查询单个实体\n"+
+					"\n	/**根据实体ID查询单个实体*/\n"+
 					"	" + entityClassName + " selectByPrimaryKey(" + classIdPropertyType + " " + entityIdName + ");\n"+
-					"\n	//根据选择性实体字段分页查询实体数组\n"+
+					"\n	/**根据选择性实体字段分页查询实体数组*/\n"+
 					"	List<" + entityClassName + "> selectByEntityAndPage(@Param(\"entity\") " + entityClassName + " entity, @Param(\"page\") Page page);\n"+
-					"\n	//根据选择性实体字段查询实体数量\n"+
+					"\n	/**根据选择性实体字段查询实体数量*/\n"+
 					"	int countByEntity(@Param(\"entity\") " + entityClassName + " entity);\n"+
 					"\n"+
 					"}\n";
@@ -309,21 +309,21 @@ public class CalssGeneratorForMybatis {
 					"import " + entityTargetPackage + "." + entityClassName + ";\n"+
 					"\n" + info + " \n"+
 					"public interface " + className + " {\n"+
-					"\n	//单个实体全部字段添加\n"+
+					"\n	/**单个实体全部字段添加*/\n"+
 					"	ResultData<Void> insertOne(" + entityClassName + " entity);\n"+
-					"\n	//根据实体ID单个实体删除\n"+
+					"\n	/**根据实体ID单个实体删除*/\n"+
 					"	ResultData<Void> deleteOne(" + classIdPropertyType + " " + entityIdName + ");\n"+
-					"\n	//根据实体ID数组批量删除实体\n"+
+					"\n	/**根据实体ID数组批量删除实体*/\n"+
 					"	ResultData<Void> deleteBatch(" + classIdPropertyType + "[] " + entityIdName + "s);\n"+
-					"\n	//单个实体全部字段更新\n"+
+					"\n	/**单个实体全部字段更新*/\n"+
 					"	ResultData<Void> updateOne(" + entityClassName + " entity);\n"+
-					"\n	//单个实体选择性字段更新\n"+
+					"\n	/**单个实体选择性字段更新*/\n"+
 					"	ResultData<Void> updateOneSelective(" + entityClassName + " entity);\n"+
-					"\n	//根据实体ID查询单个实体\n"+
+					"\n	/**根据实体ID查询单个实体*/\n"+
 					"	ResultData<" + entityClassName + "> selectOne(" + classIdPropertyType + " " + entityIdName + ");\n"+
-					"\n	//根据选择性实体字段分页查询实体数组\n"+
+					"\n	/**根据选择性实体字段分页查询实体数组*/\n"+
 					"	ResultData<List<" + entityClassName + ">> selectList(" + entityClassName + " entity, Page page);\n"+
-					"\n	//查询全部实体\n"+
+					"\n	/**查询全部实体*/\n"+
 					"	ResultData<List<" + entityClassName + ">> selectAll();\n"+
 					"\n"+
 					"}\n";
@@ -373,7 +373,7 @@ public class CalssGeneratorForMybatis {
 					"\n"+
 					"	@Resource\n"+
 					"	" + daoClassName + " " + daoClassVarName + ";\n"+
-					"\n	//单个实体全部字段添加\n"+
+					"\n	/**单个实体全部字段添加*/\n"+
 					"	@Override\n"+
 					"	public ResultData<Void> insertOne(" + entityClassName + " entity) {\n"+
 					"		ResultData<Void> resultData = new ResultData<>();\n"+
@@ -391,7 +391,7 @@ public class CalssGeneratorForMybatis {
 					"		}\n"+
 					"		return resultData;\n"+
 					"	}\n"+
-					"\n	//根据实体ID单个实体删除\n"+
+					"\n	/**根据实体ID单个实体删除*/\n"+
 					"	@Override\n"+
 					"	public ResultData<Void> deleteOne(" + classIdPropertyType + " " + entityIdName + ") {\n"+
 					"		ResultData<Void> resultData = new ResultData<>();\n"+
@@ -409,7 +409,7 @@ public class CalssGeneratorForMybatis {
 					"		}\n"+
 					"		return resultData;\n"+
 					"	}\n"+
-					"\n	//根据实体ID数组批量删除实体\n"+
+					"\n	/**根据实体ID数组批量删除实体*/\n"+
 					"	@Override\n"+
 					"	public ResultData<Void> deleteBatch(" + classIdPropertyType + "[] " + entityIdName + "s) {\n"+
 					"		ResultData<Void> resultData = new ResultData<>();\n"+
@@ -427,7 +427,7 @@ public class CalssGeneratorForMybatis {
 					"		}\n"+
 					"		return resultData;\n"+
 					"	}\n"+
-					"\n	//单个实体全部字段更新\n"+
+					"\n	/**单个实体全部字段更新*/\n"+
 					"	@Override\n"+
 					"	public ResultData<Void> updateOne(" + entityClassName + " entity) {\n"+
 					"		ResultData<Void> resultData = new ResultData<>();\n"+
@@ -445,7 +445,7 @@ public class CalssGeneratorForMybatis {
 					"		}\n"+
 					"		return resultData;\n"+
 					"	}\n"+
-					"\n	//单个实体选择性字段更新\n"+
+					"\n	/**单个实体选择性字段更新*/\n"+
 					"	@Override\n"+
 					"	public ResultData<Void> updateOneSelective(" + entityClassName + " entity) {\n"+
 					"		ResultData<Void> resultData = new ResultData<>();\n"+
@@ -463,7 +463,7 @@ public class CalssGeneratorForMybatis {
 					"		}\n"+
 					"		return resultData;\n"+
 					"	}\n"+
-					"\n	//根据实体ID查询单个实体\n"+
+					"\n	/**根据实体ID查询单个实体*/\n"+
 					"	@Override\n"+
 					"	public ResultData<" + entityClassName + "> selectOne(" + classIdPropertyType + " " + entityIdName + ") {\n"+
 					"		ResultData<" + entityClassName + "> resultData = new ResultData<>();\n"+
@@ -482,7 +482,7 @@ public class CalssGeneratorForMybatis {
 					"\n"+
 					"		return resultData;\n"+
 					"	}\n"+
-					"\n	//根据选择性实体字段分页查询实体数组\n"+
+					"\n	/**根据选择性实体字段分页查询实体数组*/\n"+
 					"	@Override\n"+
 					"	public ResultData<List<" + entityClassName + ">> selectList(" + entityClassName + " entity, Page page) {\n"+
 					"		ResultData<List<" + entityClassName + ">> resultData = new ResultData<>();\n"+
@@ -511,7 +511,7 @@ public class CalssGeneratorForMybatis {
 					"\n"+
 					"		return resultData;\n"+
 					"	}\n"+
-					"\n	//查询全部实体\n"+
+					"\n	/**查询全部实体*/\n"+
 					"	@Override\n"+
 					"	public ResultData<List<" + entityClassName + ">> selectAll() {\n"+
 					"		ResultData<List<" + entityClassName + ">> resultData = new ResultData<>();\n"+
@@ -579,7 +579,7 @@ public class CalssGeneratorForMybatis {
 					"\n"+
 					"	@Resource\n"+
 					"	" + serviceClassName + " " + serviceClassVarName + ";\n"+
-					"\n	//单个实体全部字段添加\n"+
+					"\n	/**单个实体全部字段添加*/\n"+
 					"	@RequestMapping(value = \"/insert\", method = RequestMethod.POST)\n"+
 					"	@ResponseBody\n"+
 					"	public ResultData<Void> insertOne(" + entityClassName + " entity) {\n"+
@@ -587,7 +587,7 @@ public class CalssGeneratorForMybatis {
 					"\n"+
 					"		return resultData;\n"+
 					"	}\n"+
-					"\n	//根据实体ID单个实体删除\n"+
+					"\n	/**根据实体ID单个实体删除*/\n"+
 					"	@RequestMapping(value = \"/delete\", method = RequestMethod.POST)\n"+
 					"	@ResponseBody\n"+
 					"	public ResultData<Void> deleteOne(" + classIdPropertyType + " " + entityIdName + ") {\n"+
@@ -595,7 +595,7 @@ public class CalssGeneratorForMybatis {
 					"		\n"+
 					"		return resultData;\n"+
 					"	}\n"+
-					"\n	//根据实体ID数组批量删除实体\n"+
+					"\n	/**根据实体ID数组批量删除实体*/\n"+
 					"	@RequestMapping(value = \"/deleteBatch\", method = RequestMethod.POST)\n"+
 					"	@ResponseBody\n"+
 					"	public ResultData<Void> deleteBatch(" + classIdPropertyType + "[] " + entityIdName + "s) {\n"+
@@ -603,7 +603,7 @@ public class CalssGeneratorForMybatis {
 					"\n"+
 					"		return resultData;\n"+
 					"	}\n"+
-					"\n	//单个实体全部字段更新\n"+
+					"\n	/**单个实体全部字段更新*/\n"+
 					"	@RequestMapping(value = \"/update\", method = RequestMethod.POST)\n"+
 					"	@ResponseBody\n"+
 					"	public ResultData<Void> updateOne(" + entityClassName + " entity) {\n"+
@@ -611,7 +611,7 @@ public class CalssGeneratorForMybatis {
 					"\n"+
 					"		return resultData;\n"+
 					"	}\n"+
-					"\n	//单个实体选择性字段更新\n"+
+					"\n	/**单个实体选择性字段更新*/\n"+
 					"	@RequestMapping(value = \"/updateSelective\", method = RequestMethod.POST)\n"+
 					"	@ResponseBody\n"+
 					"	public ResultData<Void> updateOneSelective(" + entityClassName + " entity) {\n"+
@@ -619,7 +619,7 @@ public class CalssGeneratorForMybatis {
 					"\n"+
 					"		return resultData;\n"+
 					"	}\n"+
-					"\n	//根据实体ID查询单个实体\n"+
+					"\n	/**根据实体ID查询单个实体*/\n"+
 					"	@RequestMapping(value = \"/select\", method = RequestMethod.GET)\n"+
 					"	@ResponseBody\n"+
 					"	public ResultData<" + entityClassName + "> selectOne(" + classIdPropertyType + " " + entityIdName + ") {\n"+
@@ -627,7 +627,7 @@ public class CalssGeneratorForMybatis {
 					"\n"+
 					"		return resultData;\n"+
 					"	}\n"+
-					"\n	//根据选择性实体字段分页查询实体数组\n"+
+					"\n	/**根据选择性实体字段分页查询实体数组*/\n"+
 					"	@RequestMapping(value = \"/list\", method = RequestMethod.GET)\n"+
 					"	@ResponseBody\n"+
 					"	public ResultData<List<" + entityClassName + ">> selectList(" + entityClassName + " entity, Page page) {\n"+
@@ -635,7 +635,7 @@ public class CalssGeneratorForMybatis {
 					"\n"+
 					"		return resultData;\n"+
 					"	}\n"+
-					"\n	//查询全部实体\n"+
+					"\n	/**查询全部实体*/\n"+
 					"	@RequestMapping(value = \"/all\", method = RequestMethod.GET)\n"+
 					"	@ResponseBody\n"+
 					"	public ResultData<List<" + entityClassName + ">> selectAll() {\n"+
