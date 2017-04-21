@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<generatorConfiguration>
+	<!-- 数据库配置 -->
+	<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&amp;characterEncoding=UTF-8"
+		user="root" password="123456" />
+
+	<!-- DTO包位置-->
+	<javaDtoGenerator targetPackage="com.yzz.dto" />
+	
+	<!-- util包位置-->
+	<javaUtilGenerator targetPackage="com.yzz.util" />
+	
+	<!-- 实体类生成包位置 -->
+	<javaEntityGenerator targetPackage="com.yzz.entity" targetDir="src\main\java\"
+		stringTrim="true" />
+	<!-- DAO接口生成包位置-->
+	<javaDaoGenerator targetPackage="com.yzz.dao" targetDir="src\main\java\" />
+	
+	<!-- DAO接口的实现类或者映射文件生成包位置 -->
+	<javaDaoImplGenerator targetPackage="com.yzz.sql" targetDir="src\mybatis\sql\" />
+
+	<!-- service接口生成位置，serviceImpl实现类在该包的下级包impl-->
+	<javaServiceGenerator targetPackage="com.yzz.service" targetDir="src\main\java\" />
+
+	<!-- 控制器Ctrl生成位置-->
+	<javaCtrlGenerator targetPackage="com.yzz.ctrl" targetDir="src\main\java\" />
+	
+	<!-- 要生成类的相关表，无则默认生成全部 -->
+	<!-- <table tableName="crm_customer_followup3" /> -->
+
+</generatorConfiguration>
