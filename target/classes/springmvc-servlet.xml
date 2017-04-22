@@ -30,5 +30,7 @@
 	<import resource="spring/spring-multipart-resolver.xml"/>
 	<!-- 日志记录配置文件 -->
 	<import resource="spring/spring-aop-log.xml"/>
+	<!-- API 接口跨域配置 -->
+	<import resource="spring/spring-cors.xml"/>
 	
 </beans>
