@@ -25,6 +25,7 @@
 			方法后触发
 			<aop:after pointcut-ref="log" method="after" />
 			环绕触发 <aop:around pointcut-ref="log" method="around"/>
+			aop:before aop:after aop:around aop:after-returning aop:after-throwing
 		</aop:aspect>
 	</aop:config> -->
 

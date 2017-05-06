@@ -21,7 +21,7 @@
 
 	<!-- 三、静态资源默认servlet配置 1、加入对静态资源的处理：js、css、png... 2、允许用“/”做整体资源映射 -->
 	<mvc:default-servlet-handler />
-
+	
 	<!-- <import resource="spring/spring-view-resolver.xml"/>
 	<import resource="spring/spring-interceptor.xml"/>
 	<import resource="spring/spring-task.xml"/>
@@ -32,5 +32,7 @@
 	<import resource="spring/spring-aop-log.xml"/>
 	<!-- API 接口跨域配置 -->
 	<import resource="spring/spring-cors.xml"/>
+	<!-- redis配置 -->
+	<import resource="spring/spring-redis.xml"/>
 	
 </beans>

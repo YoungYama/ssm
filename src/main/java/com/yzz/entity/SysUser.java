@@ -5,7 +5,7 @@ package com.yzz.entity;
 * @description: sys_user表的实体类SysUser 
 * 
 * @author 杨志钊 
-* @date 2017-04-13 19:03:53 
+* @date 2017-05-06 16:28:49 
 */ 
 
 public class SysUser {
