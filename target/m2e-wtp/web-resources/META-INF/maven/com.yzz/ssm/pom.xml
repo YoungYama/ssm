@@ -227,6 +227,13 @@
 			<version>2.9.0</version>
 		</dependency>
 
+		<!-- mongodb相关依赖jar包 -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>3.4.2</version>
+		</dependency>
+
 
 		<!-- jsp、servlet相关依赖jar包 -->
 		<dependency>
